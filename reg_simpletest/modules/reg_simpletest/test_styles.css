@@ -1,0 +1,25 @@
+.fail { background-color: inherit; color: red; }
+.pass { background-color: inherit; color: green; }
+pre { background-color: lightgray; color: inherit; }
+
+.test-group {
+  border: 0px dotted black;
+  padding: 5px;
+  margin: 0px 10px 0px 10px;
+}
+
+.test-group > .test-group .title {
+  font-weight: bold;
+}
+
+span.fail {
+  margin-left: 10px;
+}
+
+span.pass {
+  margin-left: 10px;
+}
+
+.test-case {
+  margin-left: 10px;
+}
