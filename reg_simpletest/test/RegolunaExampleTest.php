@@ -32,7 +32,7 @@ class RegolunaExampleTest extends UnitTestCase {
   }
   
   function TestDemo(){
-    $this->assertTrue( false , 'Parece que el test se carga y ejecuta.' );
+//    $this->assertTrue( false , 'Parece que el test se carga y ejecuta.' );
   }
   
 } // End Tests

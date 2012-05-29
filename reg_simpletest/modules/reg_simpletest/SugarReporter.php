@@ -1,9 +1,22 @@
 <?php
 
 require_once('include/simpletest/simpletest.php');
+require_once('SugarTestLogger.php');
 
 class SugarReporter extends HtmlReporter {
 
+  /**
+   *
+   * @var SugarTestLogger
+   */
+  private $logger;
+  
+  function __construct( $logger = null ){
+    parent::__construct();
+    if($logger) $this->logger = $logger;
+    else $this->logger = new SugarTestLogger( -1 );
+  }
+  
   function paintHeader($test_name) {
     print '<link rel="stylesheet" type="text/css" href="modules/reg_simpletest/test_styles.css">';
     flush();
@@ -52,6 +65,7 @@ class SugarReporter extends HtmlReporter {
    */
   function paintCaseStart($test_name) {
     print '<div class="test-case"><div class="title">' . $test_name . '</div>';
+    $this->logger->reset();
   }
 
   /**
@@ -69,6 +83,12 @@ class SugarReporter extends HtmlReporter {
    *    @access public
    */
   function paintPass($message) {
+    
+        $logMessages = $this->logger->flush();
+        if( is_array( $logMessages ) ) foreach ($logMessages as $m){
+          print "<div class=\"log severity-{$m['severity']}\"><strong>Log {$m['severity']}:</strong> {$m['text']}</div>";
+        }
+        
         parent::paintPass($message);
         print "<span class=\"pass\">Pass</span>: ";
         $breadcrumb = $this->getTestList();
