@@ -21,7 +21,7 @@ if(!defined('sugarEntry') || !sugarEntry) {
  * @author Rodrigo Saiz (rodrigo@regoluna.com)
  *
  */
-class RegolunaExampleTest extends UnitTestCase {
+class RegolunaExampleTest extends SugarUnitTestCase {
   
   function __construct() {
     parent::__construct( 'Basic Use Case Test' );

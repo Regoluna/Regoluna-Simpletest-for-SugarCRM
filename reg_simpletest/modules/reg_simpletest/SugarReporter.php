@@ -10,13 +10,13 @@ class SugarReporter extends HtmlReporter {
    * @var SugarTestLogger
    */
   private $logger;
-  
+
   function __construct( $logger = null ){
     parent::__construct();
     if($logger) $this->logger = $logger;
     else $this->logger = new SugarTestLogger( -1 );
   }
-  
+
   function paintHeader($test_name) {
     print '<link rel="stylesheet" type="text/css" href="modules/reg_simpletest/test_styles.css">';
     flush();
@@ -83,16 +83,30 @@ class SugarReporter extends HtmlReporter {
    *    @access public
    */
   function paintPass($message) {
-    
-        $logMessages = $this->logger->flush();
-        if( is_array( $logMessages ) ) foreach ($logMessages as $m){
-          print "<div class=\"log severity-{$m['severity']}\"><strong>Log {$m['severity']}:</strong> {$m['text']}</div>";
-        }
-        
-        parent::paintPass($message);
-        print "<span class=\"pass\">Pass</span>: ";
-        $breadcrumb = $this->getTestList();
-        print $breadcrumb[ (count($breadcrumb)-1) ] . "<br/>";
-      }
+    $logMessages = $this->logger->flush();
+    if( is_array( $logMessages ) ) foreach ($logMessages as $m){
+      print "<div class=\"log severity-{$m['severity']}\"><strong>Log {$m['severity']}:</strong> {$m['text']}</div>";
+    }
+    parent::paintPass($message);
+    print "<span class=\"pass\">Pass</span>: ";
+    $breadcrumb = $this->getTestList();
+    print $breadcrumb[ (count($breadcrumb)-1) ] . "<br/>";
+  }
+
+  /**
+   *    Increments the pass count.
+   *    @param string $message        Message is ignored.
+   *    @access public
+   */
+  function paintFail($message) {
+    $logMessages = $this->logger->flush();
+    if( is_array( $logMessages ) ) foreach ($logMessages as $m){
+      print "<div class=\"log severity-{$m['severity']}\"><strong>Log {$m['severity']}:</strong> {$m['text']}</div>";
+    }
+    parent::paintFail($message);
+    print "<span class=\"fail\">Fail</span>: ";
+      $breadcrumb = $this->getTestList();
+      print $breadcrumb[ (count($breadcrumb)-1) ] . "<br/>";
+  }
 
 }
